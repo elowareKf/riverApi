@@ -18,11 +18,11 @@ class DbConnection
         $this->connection->connect();
     }
 
-    public function saveData(levelMeasurement $levelMeasurement){
+    public function saveData(LevelMeasurement $levelMeasurement){
 
     }
 
-    public function isLatest(levelMeasurement $levelMeasurement){
+    public function isLatest(LevelMeasurement $levelMeasurement){
         $url = $this->connection->real_escape_string($levelMeasurement->firebaseUrl);
         $query = "select * from levelSpots where levelSpotUrl = '$url'";
         $result = $this->connection->query($query);

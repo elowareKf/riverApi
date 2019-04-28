@@ -3,7 +3,7 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
-require ('models/levelMeasurement.php');
+require('models/LevelMeasurement.php');
 
 class template
 {

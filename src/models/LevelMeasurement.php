@@ -1,7 +1,7 @@
 <?php
 
 
-class levelMeasurement{
+class LevelMeasurement{
     public $firebaseUrl;
     public $name;
     public $creekKm;
