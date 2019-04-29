@@ -5,8 +5,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 require 'vendor/autoload.php';
+require './models/LevelMeasurement.php';
 
-$app = new \Slim\App;
+$app = new App;
 
 class template
 {
@@ -41,9 +42,10 @@ $app->get('/level/{name}', function (Request $request, Response $response, array
 });
 
 $app->post('/level/{name}', function (Request $request, Response $response, array $args) {
-    $measurement = $request->getParsedBody();
+    $measurement = LevelMeasurement::fromJson($request->getParsedBody());
 
-
+    $measurement->flow = 12.2;
+    $measurement->lastMeasurement = getdate();
 
 
     return $response->withJson($measurement);
