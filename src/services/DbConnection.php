@@ -1,8 +1,12 @@
 <?php
 
+use Simplon\Mysql\Mysql;
+use Simplon\Mysql\PDOConnector;
+
 
 class DbConnection
 {
+    private $pdo;
     private $connection;
 
     private $server = "localhost";
@@ -14,8 +18,13 @@ class DbConnection
 
     public function  __construct()
     {
-        $this->connection = new mysqli($this->server,$this->user,$this->password,$this->database, $this->port);
-        $this->connection->connect();
+        $this->pdo = new PDOConnector($this->server,
+            $this->user,
+            $this->password,
+            $this->database);
+
+        $this->connection = new Mysql( $this->pdo->connect('utf8', []));
+
     }
 
     public function saveData(LevelMeasurement $levelMeasurement){
@@ -23,14 +32,15 @@ class DbConnection
     }
 
     public function isLatest(LevelMeasurement $levelMeasurement){
-        $url = $this->connection->real_escape_string($levelMeasurement->firebaseUrl);
-        $query = "select * from levelSpots where levelSpotUrl = '$url'";
-        $result = $this->connection->query($query);
+        // $url = $this->connection->real_escape_string($levelMeasurement->firebaseUrl);
+        $query = "select * from levelSpots where levelSpotUrl = '.$levelMeasurement->firebaseUrl.'";
+        $result = $this->connection->fetchRow($query);
 
-        $row = $result->fetch_row();
+        //$row = $result->fetch_row();
 
-        if ( $row == null) return null;
+        if ( $result == null) return null;
 
+        return $result;
 
     }
 }

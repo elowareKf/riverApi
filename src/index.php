@@ -6,6 +6,7 @@ use Slim\Http\Response;
 
 require 'vendor/autoload.php';
 require './models/LevelMeasurement.php';
+require './services/DbConnection.php';
 
 $app = new App;
 
@@ -47,6 +48,8 @@ $app->post('/level/{name}', function (Request $request, Response $response, arra
     $measurement->flow = 12.2;
     $measurement->lastMeasurement = getdate();
 
+    $database = new DbConnection();
+    $data = $database->saveData($measurement);
 
     return $response->withJson($measurement);
 });
