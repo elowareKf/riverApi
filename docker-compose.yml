@@ -2,13 +2,16 @@ version: '3'
 
 services:
   webserver:
-    image: phpstorm/php-71-apache-xdebug
+    image: php:7-alpine
+    working_dir: /var/www
+    command: php -S 0.0.0.0:80
     ports:
       - "8080:80"
     volumes:
-      - ./src/:/var/www/html
+      - ./src/:/var/www
     environment:
       XDEBUG_CONFIG: remote_host=host.docker.internal
+
 
   db:
     image: mysql
