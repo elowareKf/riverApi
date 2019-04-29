@@ -1,3 +1,4 @@
-/vendor/
+/src/vendor/
 /logs/*
 !/logs/README.md
+.DS_store

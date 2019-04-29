@@ -1,0 +1,8 @@
+{
+  "uri": "http://localhost:8080/dummy",
+  "method": "GET",
+  "body": "",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
