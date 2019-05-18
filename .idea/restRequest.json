@@ -1,6 +1,6 @@
 {
-  "uri": "http://localhost/level/soca",
-  "method": "POST",
+  "uri": "http://localhost:8080/sections/282",
+  "method": "GET",
   "body": "{\n     \"firebaseUrl\" : \"creek/123456789/levelSpot/987654321\",\n     \"name\" : \"Zaga\",\n     \"creekKm\" : 83.2,\n     \"latLng\" : \"12.34343;40.243342\",\n     \"flow\" : 45.2,\n     \"level\" : 124.3,\n     \"temperature\" : 9.2\n}",
   "headers": {
     "Accept": "application/json",

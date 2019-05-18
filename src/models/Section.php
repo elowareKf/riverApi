@@ -11,4 +11,7 @@ class Section{
     public $parkPutIn;
     public $parkTakeOut;
     public $hotSpots;
+    public $type;
+    public $riverId;
+    public $origin;
 }
