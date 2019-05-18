@@ -27,13 +27,10 @@ class DbConnection
     public function getSection(int $id)
     {
         if ($this->connection == null) {
-           // echo("Database not initialized");
             return "Database not connected";
         }
-        //else
-           // echo("Calling database for section");
 
-        $query = "select *, s.river as riverId, s.origin sectionOrigin " .
+        $query = "select *, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
             "from sections s " .
             "left outer join rivers r on r.id = s.river " .
             "left outer join levelSpots l on l.id = s.levelSpot " .
@@ -41,39 +38,28 @@ class DbConnection
 
         $rows = $this->connection->query($query);
         while($row = $rows->fetch_assoc()){
-
-            $section = new Section();
-            $section->grade = $row['general_grade'];
-            $section->name = $row['section'];
-            $section->spotGrade = $row['spot_grades'];
-            $section->id = $id;
-            $section->putIn = $row['latstart'].';'.$row['lngstart'];
-            $section->takeOut = $row['latend'].';'.$row['lngend'];
-            $section->type = $row['type'];
-            $section->riverId = $row['riverId'];
-            $section->origin = $row['sectionOrigin'];
-            return $section;
+            return Section::getSectionFromRow($row);
         }
         return $rows;
     }
 
+    public function findSection(string $river, string $section){
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
 
-    public function saveData(LevelMeasurement $levelMeasurement)
-    {
+        $query = "select *, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
+            "from sections s " .
+            "left outer join rivers r on r.id = s.river " .
+            "left outer join levelSpots l on l.id = s.levelSpot ".
+        "where r.name like '%$river%' and s.name like '%$section%'";
 
-    }
+        $rows = $this->connection->query($query);
 
-    public function isLatest(LevelMeasurement $levelMeasurement)
-    {
-        // $url = $this->connection->real_escape_string($levelMeasurement->firebaseUrl);
-        $query = "select * from levelSpots where levelSpotUrl = '.$levelMeasurement->firebaseUrl.'";
-        $result = $this->connection->fetchRow($query);
-
-        //$row = $result->fetch_row();
-
-        if ($result == null) return null;
-
+        $result = array();
+        while($row = $rows->fetch_assoc()){
+            $result.append(Section::getSectionFromRow($row));
+        }
         return $result;
-
     }
 }
