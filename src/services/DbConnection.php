@@ -1,5 +1,6 @@
 <?php
 
+require './models/Section.php';
 
 class DbConnection
 {
@@ -15,24 +16,37 @@ class DbConnection
 
     public function __construct()
     {
-        $mysql = mysqli_connect($this->server, $this->user, $this->password, $this->database, $this->port);
-        if (!$mysql){
+        $mysql = new mysqli($this->server, $this->user, $this->password, $this->database, $this->port);
+        if (!$mysql) {
+            echo("An error occurred on connecting to the database");
             echo(mysqli_connect_error());
             $this->connection = null;
-        }
-        else $this->connection = $mysql;
+        } else $this->connection = $mysql;
     }
 
     public function getSection(int $id)
     {
-        $query = `select *
-        from sections s
-        left outer join river r on r.id = s.river
-        left outer join levelSpots l on l.id = s.levelSpot
-        where id = $id `;
+        if ($this->connection == null) {
+           // echo("Database not initialized");
+            return "Database not connected";
+        }
+        //else
+           // echo("Calling database for section");
 
-        $rows = $this->connection->prepare($query);
+        $query = "select * " .
+            "from sections s " .
+            "left outer join rivers r on r.id = s.river " .
+            "left outer join levelSpots l on l.id = s.levelSpot " .
+            "where s.id = $id";
 
+        $rows = $this->connection->query($query);
+        while($row = $rows->fetch_row()){
+            //echo ($row[1] .  "\r\n");
+
+            $section = new Section();
+            $section->name = $row[8];
+            return $section;
+        }
         return $rows;
     }
 
