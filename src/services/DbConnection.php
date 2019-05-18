@@ -15,7 +15,12 @@ class DbConnection
 
     public function __construct()
     {
-        $this->connection = mysqli_connect($this->server, $this->user, $this->password, $this->database, $this->port);
+        $mysql = mysqli_connect($this->server, $this->user, $this->password, $this->database, $this->port);
+        if (!$mysql){
+            echo(mysqli_connect_error());
+            $this->connection = null;
+        }
+        else $this->connection = $mysql;
     }
 
     public function getSection(int $id)
@@ -26,7 +31,7 @@ class DbConnection
         left outer join levelSpots l on l.id = s.levelSpot
         where id = $id `;
 
-        $rows = $this->connection->fetchRow($query);
+        $rows = $this->connection->prepare($query);
 
         return $rows;
     }
