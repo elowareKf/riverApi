@@ -30,7 +30,7 @@ class DbConnection
             return "Database not connected";
         }
 
-        $query = "select *, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
+        $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
             "from sections s " .
             "left outer join rivers r on r.id = s.river " .
             "left outer join levelSpots l on l.id = s.levelSpot " .
@@ -48,17 +48,17 @@ class DbConnection
             return "Database not connected";
         }
 
-        $query = "select *, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
+        $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
             "from sections s " .
             "left outer join rivers r on r.id = s.river " .
             "left outer join levelSpots l on l.id = s.levelSpot ".
-        "where r.name like '%$river%' and s.name like '%$section%'";
+        "where r.name like '%$river%' or s.name like '%$section%'";
 
         $rows = $this->connection->query($query);
 
-        $result = array();
+        $result = [];
         while($row = $rows->fetch_assoc()){
-            $result.append(Section::getSectionFromRow($row));
+            array_push($result, Section::getSectionFromRow($row));
         }
         return $result;
     }

@@ -16,7 +16,9 @@ $app->get('/section/{id}', function(Request $request, Response $response, array 
 });
 
 $app->get('/section', function (Request $request, Response $response, array $args){
-
+    $search = $request->getParam('search');
+    $db = new DbConnection();
+    return $response->withJson($db->findSection($search, $search));
 });
 
 $app->run();
