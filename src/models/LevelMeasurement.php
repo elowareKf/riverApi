@@ -2,6 +2,7 @@
 
 
 class LevelMeasurement{
+    public $id;
     public $firebaseUrl;
     public $name;
     public $creekKm;
@@ -26,3 +27,4 @@ class LevelMeasurement{
         return $result;
     }
 }
+

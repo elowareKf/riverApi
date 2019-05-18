@@ -42,6 +42,11 @@ $app->get('/level/{name}', function (Request $request, Response $response, array
     return $response->withJson($data);
 });
 
+$app->get('/sections/{id}', function(Request $request, Response $response, array $args){
+    $db = new DbConnection();
+    return $response->withJson($db->getSection($args['id']));
+});
+
 $app->post('/level/{name}', function (Request $request, Response $response, array $args) {
     $measurement = LevelMeasurement::fromJson($request->getParsedBody());
 
