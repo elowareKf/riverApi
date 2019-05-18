@@ -1,6 +1,7 @@
 <?php
 
 require './models/Section.php';
+require './models/River.php';
 
 class DbConnection
 {
@@ -24,7 +25,7 @@ class DbConnection
         } else $this->connection = $mysql;
     }
 
-    public function getSection(int $id)
+    public function getSection($id)
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -37,13 +38,14 @@ class DbConnection
             "where s.id = $id";
 
         $rows = $this->connection->query($query);
-        while($row = $rows->fetch_assoc()){
+        while ($row = $rows->fetch_assoc()) {
             return Section::getSectionFromRow($row);
         }
         return $rows;
     }
 
-    public function findSection(string $river, string $section){
+    public function findSection($section)
+    {
         if ($this->connection == null) {
             return "Database not connected";
         }
@@ -51,14 +53,87 @@ class DbConnection
         $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
             "from sections s " .
             "left outer join rivers r on r.id = s.river " .
-            "left outer join levelSpots l on l.id = s.levelSpot ".
-        "where r.name like '%$river%' or s.name like '%$section%'";
+            "left outer join levelSpots l on l.id = s.levelSpot " .
+            "where s.name like '%$section%'";
 
         $rows = $this->connection->query($query);
 
         $result = [];
-        while($row = $rows->fetch_assoc()){
+        while ($row = $rows->fetch_assoc()) {
             array_push($result, Section::getSectionFromRow($row));
+        }
+        return $result;
+    }
+
+    public function findSectionAndRiver($river, $section)
+    {
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
+            "from sections s " .
+            "left outer join rivers r on r.id = s.river " .
+            "left outer join levelSpots l on l.id = s.levelSpot " .
+            "where r.name like '%$river%' or s.name like '%$section%'";
+
+        $rows = $this->connection->query($query);
+
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            array_push($result, Section::getSectionFromRow($row));
+        }
+        return $result;
+    }
+
+    private function getSectionsForRiver($id)
+    {
+        $query = "select *, id as sectionId, name as section, ".
+            " $id as riverId, ".
+            "origin as sectionOrigin from sections where river = $id";
+        $rows = $this->connection->query($query);
+
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            array_push($result, Section::getSectionFromRow($row));
+        }
+        return $result;
+    }
+
+    public function getRiver($id)
+    {
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "select * from rivers where id = $id";
+
+        $rows = $this->connection->query($query);
+        $river = null;
+        while ($row = $rows->fetch_assoc()) {
+            $river = River::getFromRow($row);
+        }
+
+        if ($river != null) {
+            $river->sections = $this->getSectionsForRiver($id);
+        }
+
+        return $river;
+
+    }
+
+    public function findRivers($search){
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "select * from rivers where name like '%$search%'";
+
+        $rows = $this->connection->query($query);
+
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            array_push($result, River::getFromRow($row));
         }
         return $result;
     }
