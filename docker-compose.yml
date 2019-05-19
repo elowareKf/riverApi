@@ -23,4 +23,3 @@ services:
       MYSQL_USER: paddle_center_admin
       MYSQL_PASSWORD: mysql.1
       MYSQL_DATABASE: paddle_center
-

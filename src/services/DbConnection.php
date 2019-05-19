@@ -5,13 +5,12 @@ require './models/River.php';
 
 class DbConnection
 {
-    private $pdo;
     private $connection;
 
     private $server = "database";
     private $port = 3306;
     private $database = "paddle_center";
-    private $user = "root";
+    private $user = "paddle_center_admin";
     private $password = "mysql.1";
 
 
