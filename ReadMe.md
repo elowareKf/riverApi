@@ -13,6 +13,9 @@ The project uses two docker container
  - Web server
  - MySql Database
 
+## Framework
+The PHP web application is built on composer
+
 # Open Issues
 
 ## TODO
