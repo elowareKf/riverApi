@@ -3,7 +3,10 @@
 !/logs/README.md
 .DS_store
 .idea
-/mysql_data/backup.sql
+
+
+# /mysql_data/backup.sql
+
 deploy.php
 
 /src/services/Credentials.php
