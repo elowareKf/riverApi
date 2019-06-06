@@ -32,4 +32,12 @@ $app->get('/river', function(Request $request, Response $response, array $args){
     return $response->withJson($db->findRivers($search));
 });
 
+$app->get('/dummy', function(Request $request, Response $response, array $args){
+    return $response->write('Hello on the dummy path');
+});
+
+$app->get('/', function(Request $request, Response $response, array $args){
+    return $response->write('<h1>Whitewater-Journal Backend</h1><p>This page is only for API Clients.</p>');
+});
+
 $app->run();

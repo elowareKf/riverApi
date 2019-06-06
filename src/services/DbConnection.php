@@ -3,20 +3,50 @@
 require './models/Section.php';
 require './models/River.php';
 
+class Settings
+{
+    public $server = "database";
+    public $port = 3306;
+    public $database = "paddle_center";
+    public $user = "paddle_center_admin";
+    public $password = "mysql.1";
+
+    public function __construct()
+    {
+        error_reporting(0);
+        try {
+            if (include('Credentials.php')) {
+                $this->server = Credentials::$server;
+                $this->port = Credentials::$port;
+                $this->database = Credentials::$database;
+                $this->user = Credentials::$user;
+                $this->password = Credentials::$password;
+            } else {
+                //
+            }
+        }
+        catch (Exception $e){}
+    }
+
+}
+
 class DbConnection
 {
     private $connection;
-
-    private $server = "database";
-    private $port = 3306;
-    private $database = "paddle_center";
-    private $user = "paddle_center_admin";
-    private $password = "mysql.1";
+    private $settings;
 
 
     public function __construct()
     {
-        $mysql = new mysqli($this->server, $this->user, $this->password, $this->database, $this->port);
+        $this->settings = new Settings();
+
+
+        $mysql = new mysqli(
+            $this->settings->server,
+            $this->settings->user,
+            $this->settings->password,
+            $this->settings->database,
+            $this->settings->port);
         if (!$mysql) {
             echo("An error occurred on connecting to the database");
             echo(mysqli_connect_error());
@@ -87,8 +117,8 @@ class DbConnection
 
     private function getSectionsForRiver($id)
     {
-        $query = "select *, id as sectionId, name as section, ".
-            " $id as riverId, ".
+        $query = "select *, id as sectionId, name as section, " .
+            " $id as riverId, " .
             "origin as sectionOrigin from sections where river = $id";
         $rows = $this->connection->query($query);
 
@@ -121,7 +151,8 @@ class DbConnection
 
     }
 
-    public function findRivers($search){
+    public function findRivers($search)
+    {
         if ($this->connection == null) {
             return "Database not connected";
         }
