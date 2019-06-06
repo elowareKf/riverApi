@@ -19,7 +19,6 @@ To connect the PHP script to your own database server create a file named Creden
 ````php
 <?php
 
-
 class Credentials {
     public static $server = "server name";
     public static $port = 3306;
@@ -28,6 +27,8 @@ class Credentials {
     public static $password = "top secret password";
 }
 ````
+
+
 
 ## Framework
 The PHP web application is built on composer
