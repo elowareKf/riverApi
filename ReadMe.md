@@ -13,6 +13,22 @@ The project uses two docker container
  - Web server
  - MySql Database
 
+## Using for your database
+
+To connect the PHP script to your own database server create a file named Credentials.php in the services folder with the content:
+````php
+<?php
+
+
+class Credentials {
+    public static $server = "server name";
+    public static $port = 3306;
+    public static $database = "database";
+    public static $user = "username";
+    public static $password = "top secret password";
+}
+````
+
 ## Framework
 The PHP web application is built on composer
 
