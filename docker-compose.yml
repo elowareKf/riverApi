@@ -13,6 +13,8 @@ services:
       XDEBUG_CONFIG: remote_host=host.docker.internal
     links:
       - "db:database"
+    depends_on:
+      - db
 
   db:
     image: mysql

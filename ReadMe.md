@@ -2,6 +2,8 @@
 
 This project ist a backend server for  a riverdatabase
 
+####to run the project make sure to run the composer install!
+
 ## Project target
 
 To build a common backend for all projects which needs a river, section database
