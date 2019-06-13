@@ -2,7 +2,7 @@
 
 This project ist a backend server for  a riverdatabase
 
-####to run the project make sure to run the composer install!
+### To run the project make sure to run the composer install!
 
 ## Project target
 
