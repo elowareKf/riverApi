@@ -24,7 +24,7 @@ class RiverRepository
         return $result;
     }
 
-    public function getRiver($id)
+    public function get($id)
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -46,7 +46,7 @@ class RiverRepository
 
     }
 
-    public function addRiver($riverName)
+    public function add($riverName)
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -56,7 +56,7 @@ class RiverRepository
         echo $query;
     }
 
-    public function findRivers($search)
+    public function find($search)
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -73,7 +73,7 @@ class RiverRepository
         return $result;
     }
 
-    public function updateRiver($riverId, River $river)
+    public function update($riverId, River $river)
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -83,4 +83,13 @@ class RiverRepository
         $this->connection->query($query);
     }
 
+
+    public function delete($riverId){
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "delete from rivers where id = {$riverId}";
+        $this->connection->query($query);
+    }
 }
