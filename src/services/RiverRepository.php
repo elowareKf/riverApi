@@ -5,7 +5,7 @@ class RiverRepository
 {
     private $connection;
 
-    public function __construct($connection)
+    public function __construct(mysqli $connection)
     {
         $this->connection = $connection;
     }
@@ -46,14 +46,24 @@ class RiverRepository
 
     }
 
-    public function add($riverName)
+    public function add(River $river)
     {
         if ($this->connection == null) {
             return "Database not connected";
         }
 
-        $query = "insert into rivers (name) values ('$riverName')";
-        echo $query;
+        $query = "insert into rivers (name, countries, grades) values ('{$river->name}', '{$river->countries}', '{$river->grades}')";
+
+        $this->connection->query($query);
+        $reader = $this->connection->query("SELECT LAST_INSERT_ID()");
+
+        if ($reader === false)
+            die($this->connection->error . " Adding not successful");
+
+        if ($row = $reader->fetch_row()) {
+            $river->id = $row[0];
+        }
+        return $river;
     }
 
     public function find($search)
@@ -84,7 +94,8 @@ class RiverRepository
     }
 
 
-    public function delete($riverId){
+    public function delete($riverId)
+    {
         if ($this->connection == null) {
             return "Database not connected";
         }

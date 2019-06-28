@@ -31,7 +31,13 @@ class RouteRiver
         });
 
         $app->post('', function (Request $request, Response $response, array $args) {
+            $river = $request->getParsedBody();
+            $river = River::getFromRow($river);
 
+            $db = new DbConnection();
+            $result = $db->riverRepository->add($river);
+
+            return $response->withJson($result);
         });
 
         $app->delete('/{id}', function (Request $request, Response $response, array $args) {
