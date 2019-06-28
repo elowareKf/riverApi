@@ -2,6 +2,7 @@
 
 require './models/Section.php';
 require './models/River.php';
+require 'RiverRepository.php';
 
 class Settings
 {
@@ -35,6 +36,7 @@ class DbConnection
     private $connection;
     private $settings;
 
+    public $riverRepository;
 
     public function __construct()
     {
@@ -52,6 +54,8 @@ class DbConnection
             echo(mysqli_connect_error());
             $this->connection = null;
         } else $this->connection = $mysql;
+
+        $this->riverRepository = new RiverRepository($this->connection);
     }
 
     public function getSection($id)
@@ -115,41 +119,6 @@ class DbConnection
         return $result;
     }
 
-    private function getSectionsForRiver($id)
-    {
-        $query = "select *, id as sectionId, name as section, " .
-            " $id as riverId, " .
-            "origin as sectionOrigin from sections where river = $id";
-        $rows = $this->connection->query($query);
-
-        $result = [];
-        while ($row = $rows->fetch_assoc()) {
-            array_push($result, Section::getSectionFromRow($row));
-        }
-        return $result;
-    }
-
-    public function getRiver($id)
-    {
-        if ($this->connection == null) {
-            return "Database not connected";
-        }
-
-        $query = "select * from rivers where id = $id";
-
-        $rows = $this->connection->query($query);
-        $river = null;
-        while ($row = $rows->fetch_assoc()) {
-            $river = River::getFromRow($row);
-        }
-
-        if ($river != null) {
-            $river->sections = $this->getSectionsForRiver($id);
-        }
-
-        return $river;
-
-    }
 
     public function addSection($riverId, $sectionName)
     {
@@ -159,40 +128,4 @@ class DbConnection
 
     }
 
-    public function addRiver($riverName)
-    {
-        if ($this->connection == null) {
-            return "Database not connected";
-        }
-
-        $query = "insert into rivers (name) values ('$riverName')";
-        echo $query;
-    }
-
-    public function findRivers($search)
-    {
-        if ($this->connection == null) {
-            return "Database not connected";
-        }
-
-        $query = "select * from rivers where name like '%$search%'";
-
-        $rows = $this->connection->query($query);
-
-        $result = [];
-        while ($row = $rows->fetch_assoc()) {
-            array_push($result, River::getFromRow($row));
-        }
-        return $result;
-    }
-
-    public function updateRiver($riverId, River $river)
-    {
-        if ($this->connection == null) {
-            return "Database not connected";
-        }
-
-        $query = "update rivers set name = '{$river->name}', countries = '{$river->countries}', grades = '{$river->grades}' where id = {$riverId}";
-        $this->connection->query($query);
-    }
 }
