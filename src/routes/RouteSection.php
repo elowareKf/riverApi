@@ -18,4 +18,26 @@ class RouteSection
             return $response->withJson($db->sectionRepository->find($search));
         });
 
+        $app->put('/{id}', function (Request $request, Response $response, array $args){
+            $id = $args['id'];
+            $section = $request->getParsedBody();
+            $section = Section::getFromJson($section);
+            $db = new DbConnection();
+
+            $result = $db->sectionRepository->update($id, $section);
+
+            return $response->withJson($result);
+        });
+
+        $app->post('', function (Request $request, Response $response, array $args){
+
+        });
+
+        $app->delete('/{id}', function(Request $request, Response $response, array $args){
+            $id = $request->getParam('id');
+            $db = new DbConnection();
+            $db->sectionRepository->delete($id);
+
+            return $response->withStatus(200);
+        });
     }}

@@ -37,7 +37,7 @@ class RouteRiver
             $db = new DbConnection();
             $result = $db->riverRepository->add($river);
 
-            return $response->withJson($result);
+            return $response->withJson($result,201);
         });
 
         $app->delete('/{id}', function (Request $request, Response $response, array $args) {
