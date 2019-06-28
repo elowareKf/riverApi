@@ -1,3 +1,6 @@
+drop database paddle_center;
+create database paddle_center;
+
 ALTER USER paddle_center_admin IDENTIFIED with mysql_native_password by 'mysql.1';
 
 use paddle_center;

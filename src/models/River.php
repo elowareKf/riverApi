@@ -9,7 +9,6 @@ class River
     public $grades;
     public $sections;
 
-
     public static function getFromRow(array $row)
     {
         $result = new River();

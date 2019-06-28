@@ -24,8 +24,8 @@ class Settings
             } else {
                 //
             }
+        } catch (Exception $e) {
         }
-        catch (Exception $e){}
     }
 
 }
@@ -151,6 +151,24 @@ class DbConnection
 
     }
 
+    public function addSection($riverId, $sectionName)
+    {
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+    }
+
+    public function addRiver($riverName)
+    {
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "insert into rivers (name) values ('$riverName')";
+        echo $query;
+    }
+
     public function findRivers($search)
     {
         if ($this->connection == null) {
@@ -166,5 +184,15 @@ class DbConnection
             array_push($result, River::getFromRow($row));
         }
         return $result;
+    }
+
+    public function updateRiver($riverId, River $river)
+    {
+        if ($this->connection == null) {
+            return "Database not connected";
+        }
+
+        $query = "update rivers set name = '{$river->name}', countries = '{$river->countries}', grades = '{$river->grades}' where id = {$riverId}";
+        $this->connection->query($query);
     }
 }
