@@ -24,9 +24,9 @@ class RouteSection
             $section = Section::getFromJson($section);
             $db = new DbConnection();
 
-            $result = $db->sectionRepository->update($id, $section);
+            $db->sectionRepository->update($id, $section);
 
-            return $response->withJson($result);
+            return $response->withJson($db->sectionRepository->get($id));
         });
 
         $app->post('', function (Request $request, Response $response, array $args){
