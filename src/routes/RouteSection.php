@@ -30,6 +30,13 @@ class RouteSection
         });
 
         $app->post('', function (Request $request, Response $response, array $args){
+            $section = $request->getParsedBody();
+            $section = Section::getFromJson($section);
+            $db = new DbConnection();
+
+            $result = $db->sectionRepository->add($section->riverId, $section);
+
+            return $response->withJson($result);
 
         });
 
