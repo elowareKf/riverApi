@@ -2,8 +2,10 @@
 
 require './models/Section.php';
 require './models/River.php';
+require './models/Measurement.php';
 require 'RiverRepository.php';
 require 'SectionRepository.php';
+require 'LevelSpotRepository.php';
 require 'Settings.php';
 
 class DbConnection
@@ -13,6 +15,7 @@ class DbConnection
 
     public $riverRepository;
     public $sectionRepository;
+    public $levelSpotRepository;
 
     public function __construct()
     {
@@ -33,6 +36,7 @@ class DbConnection
 
         $this->riverRepository = new RiverRepository($this->connection);
         $this->sectionRepository = new SectionRepository($this->connection);
+        $this->levelSpotRepository = new LevelSpotRepository($this->connection);
     }
 
 

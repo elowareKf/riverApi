@@ -1,9 +1,9 @@
 <?php
 
 
-class LevelMeasurement{
+class LevelSpot{
     public $id;
-    public $firebaseUrl;
+    public $apiUrl;
     public $name;
     public $creekKm;
     public $latLng;
@@ -13,9 +13,9 @@ class LevelMeasurement{
     public $temperature;
 
     public static function fromJson($json){
-        $result = new LevelMeasurement();
+        $result = new LevelSpot();
 
-        $result->firebaseUrl = $json['firebaseUrl'];
+        $result->apiUrl = $json['apiUrl'];
         $result->name = $json['name'];
         $result->creekKm = $json['creekKm'];
         $result->latLng = $json['latLng'];

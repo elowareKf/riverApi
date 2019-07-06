@@ -5,12 +5,20 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 require 'vendor/autoload.php';
-require './models/LevelMeasurement.php';
+require './models/LevelSpot.php';
 require './services/DbConnection.php';
 require './routes/RouteRiver.php';
 require './routes/RouteSection.php';
+require './routes/RouteLevelSpots.php';
 
-$app = new App;
+$configuration = [
+    'settings' => [
+        'displayErrorDetails' => true,
+    ],
+];
+
+$c = new \Slim\Container($configuration);
+$app = new App($c);
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
@@ -31,6 +39,10 @@ $app->group('/river', function () use ($app) {
 
 $app->group('/section', function () use ($app) {
     RouteSection::route($app);
+});
+
+$app->group('/levelSpot', function () use ($app) {
+    RouteLevelSpots::route($app);
 });
 
 $app->get('/dummy', function (Request $request, Response $response, array $args) {
