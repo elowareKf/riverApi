@@ -52,6 +52,28 @@ class LevelSpotRepository
 
     public function addMeasurement($levelSpotId, Measurement $measurement)
     {
+        $query = "select * from levelSpot where id = {$measurement->levelSpotId} and lastMeasurement = '{$measurement->timeStamp}'";
+        $reader = $this->connection->query($query);
+        $found = false;
+        if ($reader->fetch_row()) {
+            $found = true;
+        }
+        $reader->close();
+
+        if ($found) return false;
+
+
+        $query = "update levelSpots set lastMeasurement = '{$measurement->timeStamp}', flow  = {$measurement->flow}, " .
+            "level = {$measurement->level}, temperature = {$measurement->temperature} " .
+            "where id = {$levelSpotId}";
+
+        $this->connection->query($query);
+
+        $query = "insert into paddle_center.measurements (levelSpot, \"timeStamp\", level, flow, temperature) values" .
+            "({$levelSpotId}, '{$measurement->timeStamp}', {$measurement->level}, {$measurement->flow}, {$measurement->temperature})";
+
+        $this->connection->query($query);
+        $this->connection->commit();
 
     }
 
