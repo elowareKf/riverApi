@@ -47,6 +47,13 @@ class RouteLevelSpots
         });
 
         $app->post('', function (Request $request, Response $response, array $args) {
+            $river = $args['river'];
+            $levelSpotName = $request->getParsedBody();
+
+            $db = new DbConnection();
+            $levelSpot = $db->levelSpotRepository->add($river, $levelSpotName->name);
+
+            return $response->withJson($levelSpot);
 
         });
 
