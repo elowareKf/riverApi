@@ -35,7 +35,6 @@ class LevelSpotRepository
             $levelSpotName,
             $riverId);
 
-        echo($query);
         $this->connection->query($query);
         $reader = $this->connection->query("SELECT LAST_INSERT_ID()");
 

@@ -48,12 +48,9 @@ class RiverRepository
 
     public function add(River $river)
     {
-        if ($this->connection == null) {
-            return "Database not connected";
-        }
-
         $query = "insert into rivers (name, countries, grades) values ('{$river->name}', '{$river->countries}', '{$river->grades}')";
 
+        //echo($query);
         $this->connection->query($query);
         $reader = $this->connection->query("SELECT LAST_INSERT_ID()");
 
