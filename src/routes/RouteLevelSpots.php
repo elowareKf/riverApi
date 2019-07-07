@@ -19,14 +19,13 @@ class RouteLevelSpots
             if ((!$levelSpotId) and ($country != null)) {
                 $river = $db->riverRepository->find($riverName);
 
-                if ($river.count() == 0) {
+                if (count($river) == 0) {
                     $river = new River();
                     $river->countries = $country;
                     $river->name = $riverName;
 
                     $river = $db->riverRepository->add($river);
-                }
-                else {
+                } else {
                     $river = $river[0];
                 }
 
@@ -40,7 +39,7 @@ class RouteLevelSpots
             return $response->withJson($levelSpot);
         });
 
-        $app->get('/{id}', function (Request $request, Response $response, array $args){
+        $app->get('/{id}', function (Request $request, Response $response, array $args) {
             $db = new DbConnection();
             $levelSpot = $db->levelSpotRepository->get($args['id']);
 
@@ -60,13 +59,15 @@ class RouteLevelSpots
 
         });
 
-        $app->post('/{id}/measurement', function (Request $request, Response $response, array $args){
+        $app->post('/{id}/measurement', function (Request $request, Response $response, array $args) {
             $measurement = $request->getParsedBody();
             $db = new DbConnection();
-            $measurement = Measurement::fromJson($measurement);
-            $db->levelSpotRepository->addMeasurement($args['id'], $measurement);
+            $measurement_obj = Measurement::fromJson($measurement);
+            $measurement_obj->levelSpotId = $args['id'];
 
-            return $response->withStatus(201);
+            $result = $db->levelSpotRepository->addMeasurement($args['id'], $measurement_obj);
+
+            return $response->withStatus($result ? 201 : 208);
         });
     }
 }

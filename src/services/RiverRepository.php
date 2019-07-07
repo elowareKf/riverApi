@@ -50,7 +50,6 @@ class RiverRepository
     {
         $query = "insert into rivers (name, countries, grades) values ('{$river->name}', '{$river->countries}', '{$river->grades}')";
 
-        //echo($query);
         $this->connection->query($query);
         $reader = $this->connection->query("SELECT LAST_INSERT_ID()");
 
@@ -63,7 +62,7 @@ class RiverRepository
         return $river;
     }
 
-    public function find($search)
+    public function find($search) : array
     {
         if ($this->connection == null) {
             return "Database not connected";
