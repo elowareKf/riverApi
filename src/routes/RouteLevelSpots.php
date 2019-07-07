@@ -17,16 +17,18 @@ class RouteLevelSpots
             $levelSpotId = $db->levelSpotRepository->find($riverName, $levelSpotName);
 
             if ((!$levelSpotId) and ($country != null)) {
-                $river = $db->riverRepository->find($riverName);
+                $rivers = $db->riverRepository->find($riverName);
 
-                if (count($river) == 0) {
+                $river = null;
+
+                if (count($rivers) == 0) {
                     $river = new River();
                     $river->countries = $country;
                     $river->name = $riverName;
 
                     $river = $db->riverRepository->add($river);
                 } else {
-                    $river = $river[0];
+                    $river = $rivers[0];
                 }
 
                 $levelSpotId = $db->levelSpotRepository->add($river->id, $levelSpotName, $country);

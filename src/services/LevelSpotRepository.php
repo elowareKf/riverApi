@@ -31,7 +31,7 @@ class LevelSpotRepository
             return "Database not connected";
         }
 
-        $query = sprintf('insert into paddle_center.levelSpots (name, origin, river) values ("%s", "REST added", %i)',
+        $query = sprintf('insert into paddle_center.levelSpots (name, origin, river) values ("%s", "REST added", %s)',
             $levelSpotName,
             $riverId);
 
