@@ -12,11 +12,11 @@ class Measurement
     public static function fromJson($measurement)
     {
         $result = new Measurement();
-        $result->level = $measurement['level'];
-        $result->flow = $measurement['flow'];
-        $result->temperature = $measurement['temperature'];
+        $result->level = trim($measurement['level']);
+        $result->flow = trim($measurement['flow']);
+        $result->temperature = trim($measurement['temperature']);
+        $result->timeStamp = trim($measurement['timestamp']);
         # $result->timeStamp = DateTime::createFromFormat('Y-m-d H:i:s' ,$measurement['timestamp']);
-        $result->timeStamp = $measurement['timestamp'];
         return $result;
     }
 }

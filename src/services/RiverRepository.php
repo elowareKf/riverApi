@@ -68,7 +68,8 @@ class RiverRepository
             return "Database not connected";
         }
 
-        $query = "select * from rivers where name like '%$search%'";
+        $search = trim($search);
+        $query = "select * from rivers where name like '$search'";
 
         $rows = $this->connection->query($query);
 

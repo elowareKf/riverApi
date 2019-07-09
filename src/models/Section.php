@@ -64,25 +64,25 @@ class Section
     {
         $section = new Section();
         $section->id = $json['id'];
-        $section->grade = $json['grade'];
-        $section->name = $json['name'];
-        $section->country = $json['country'];
-        $section->spotGrade = $json['spotGrade'];
-        $section->id = $json['id'];
-        $section->putIn = $json['putIn'];
-        $section->takeOut = $json['takeOut'];
-        $section->type = $json['type'];
-        $section->riverId = $json['riverId'];
-        $section->origin = $json['origin'];
-        $section->extLevelSpot = $json['extLevelSpot'];
-        $section->extLevelType = $json['extLevelType'];
-        $section->minFlow = $json['minFlow'] ?? 'null';
-        $section->midFlow = $json['midFlow'] ?? 'null';
-        $section->maxFlow = $json['maxFlow'] ?? 'null';
-        $section->minLevel = $json['minLevel'] ?? 'null';
-        $section->midLevel = $json['midLevel'] ?? 'null';
-        $section->maxLevel = $json['maxLevel'] ?? 'null';
-        $section->levelSpotId = $json['levelSpotId'] ?? 'null';
+        $section->grade = trim($json['grade']);
+        $section->name = trim($json['name']);
+        $section->country = trim($json['country']);
+        $section->spotGrade = trim($json['spotGrade']);
+        $section->id = trim($json['id']);
+        $section->putIn = trim($json['putIn']);
+        $section->takeOut = trim($json['takeOut']);
+        $section->type = trim($json['type']);
+        $section->riverId = trim($json['riverId']);
+        $section->origin = trim($json['origin']);
+        $section->extLevelSpot = trim($json['extLevelSpot']);
+        $section->extLevelType = trim($json['extLevelType']);
+        $section->minFlow = trim($json['minFlow'] ?? 'null');
+        $section->midFlow = trim($json['midFlow'] ?? 'null');
+        $section->maxFlow = trim($json['maxFlow'] ?? 'null');
+        $section->minLevel = trim($json['minLevel'] ?? 'null');
+        $section->midLevel = trim($json['midLevel'] ?? 'null');
+        $section->maxLevel = trim($json['maxLevel'] ?? 'null');
+        $section->levelSpotId = trim($json['levelSpotId'] ?? 'null');
 
         return $section;
     }

@@ -12,10 +12,10 @@ class River
     public static function getFromRow(array $row)
     {
         $result = new River();
-        $result->id = $row['id'];
-        $result->name = $row['name'];
-        $result->countries = $row['countries'];
-        $result->grades = $row['grades'];
+        $result->id = trim($row['id']);
+        $result->name = trim($row['name']);
+        $result->countries = trim($row['countries']);
+        $result->grades = trim($row['grades']);
         return $result;
     }
 }

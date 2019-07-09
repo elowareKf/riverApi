@@ -15,14 +15,14 @@ class LevelSpot{
     public static function fromJson($json){
         $result = new LevelSpot();
 
-        $result->apiUrl = $json['apiUrl'];
-        $result->name = $json['name'];
-        $result->creekKm = $json['creekKm'];
-        $result->latLng = $json['latLng'];
-        $result->lastMeasurement = $json['lastMeasurement'];
-        $result->flow = $json['flow'];
-        $result->level = $json['level'];
-        $result->temperature = $json['temperature'];
+        $result->apiUrl = trim($json['apiUrl']);
+        $result->name = trim($json['name']);
+        $result->creekKm = trim($json['creekKm']);
+        $result->latLng = trim($json['latLng']);
+        $result->lastMeasurement = trim($json['lastMeasurement']);
+        $result->flow = trim($json['flow']);
+        $result->level = trim($json['level']);
+        $result->temperature = trim($json['temperature']);
 
         return $result;
     }

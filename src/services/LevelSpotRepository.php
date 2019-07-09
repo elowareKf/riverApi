@@ -12,7 +12,7 @@ class LevelSpotRepository
 
     public function find($riverName, $levelSpotName)
     {
-        $query = sprintf("select l.id from levelSpots l left outer join rivers r on l.river = r.id where r.name like '%s' and l.name like '%s'", $riverName, $levelSpotName);
+        $query = sprintf("select l.id from levelSpots l left outer join rivers r on l.river = r.id where r.name like '%s' and l.name like '%s'", trim($riverName), trim($levelSpotName));
         $rows = $this->connection->query($query);
         $result = false;
 
@@ -31,15 +31,15 @@ class LevelSpotRepository
             return "Database not connected";
         }
 
-        $query = sprintf('insert into paddle_center.levelSpots (name, origin, river) values ("%s", "REST added", %s)',
-            $levelSpotName,
-            $riverId);
+        $query = sprintf('insert into levelSpots (name, origin, river) values ("%s", "REST added", %s)',
+            trim($levelSpotName),
+            trim($riverId));
 
         $this->connection->query($query);
         $reader = $this->connection->query("SELECT LAST_INSERT_ID()");
 
         $spotId = false;
-        if ($reader === false)
+        if ($reader === false or $this->connection->errno != 0)
             die($this->connection->error . " Adding not successful");
 
         if ($row = $reader->fetch_row()) {
