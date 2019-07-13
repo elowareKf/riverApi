@@ -15,6 +15,7 @@ class LevelSpot{
     public static function fromJson($json){
         $result = new LevelSpot();
 
+        $result->id = $json['id'];
         $result->apiUrl = trim($json['apiUrl']);
         $result->name = trim($json['name']);
         $result->creekKm = trim($json['creekKm']);
