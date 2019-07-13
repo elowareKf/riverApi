@@ -40,6 +40,7 @@ class RiverRepository
 
         if ($river != null) {
             $river->sections = $this->getSectionsForRiver($id);
+            $river->levelSpots = $this->getLevelSpotsForRiver($id);
         }
 
         return $river;
@@ -99,5 +100,19 @@ class RiverRepository
 
         $query = "delete from rivers where id = {$riverId}";
         $this->connection->query($query);
+    }
+
+    private function getLevelSpotsForRiver($id)
+    {
+        $query = 'select * from levelSpots where river = '.$id;
+        $rows = $this->connection->query($query);
+
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            array_push($result, LevelSpot::fromJson($row));
+        }
+        return $result;
+
+
     }
 }

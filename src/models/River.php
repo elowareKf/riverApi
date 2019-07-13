@@ -3,11 +3,9 @@
 
 class River
 {
-    public $id;
-    public $name;
-    public $countries;
-    public $grades;
+
     public $sections;
+    public $levelSpots;
 
     public static function getFromRow(array $row)
     {

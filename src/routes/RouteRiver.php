@@ -14,7 +14,8 @@ class RouteRiver
         });
 
         $app->get('', function (Request $request, Response $response, array $args) {
-            $search = $request->getParam('search');
+            $search = '%'.trim($request->getParam('search')).'%';
+
             $db = new DbConnection();
             return $response->withJson($db->riverRepository->find($search));
         });
