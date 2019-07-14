@@ -26,6 +26,7 @@ class Section
     public $maxLevel;
     public $levelSpotId;
 
+    public $levelSpot;
 
     /**
      * @param $row

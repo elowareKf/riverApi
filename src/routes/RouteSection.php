@@ -9,7 +9,12 @@ class RouteSection
     {
         $app->get('/{id}', function (Request $request, Response $response, array $args) {
             $db = new DbConnection();
-            return $response->withJson($db->sectionRepository->get($args['id']));
+            $result = $db->sectionRepository->get($args['id']);
+
+            if ($result->levelSpotId != null)
+                $result->levelSpot = $db->levelSpotRepository->get($result->levelSpotId);
+
+            return $response->withJson($result);
         });
 
         $app->get('', function (Request $request, Response $response, array $args) {
@@ -18,7 +23,7 @@ class RouteSection
             return $response->withJson($db->sectionRepository->find($search));
         });
 
-        $app->put('/{id}', function (Request $request, Response $response, array $args){
+        $app->put('/{id}', function (Request $request, Response $response, array $args) {
             $id = $args['id'];
             $section = $request->getParsedBody();
             $section = Section::getFromJson($section);
@@ -29,7 +34,7 @@ class RouteSection
             return $response->withJson($db->sectionRepository->get($id));
         });
 
-        $app->post('', function (Request $request, Response $response, array $args){
+        $app->post('', function (Request $request, Response $response, array $args) {
             $section = $request->getParsedBody();
             $section = Section::getFromJson($section);
             $db = new DbConnection();
@@ -40,11 +45,12 @@ class RouteSection
 
         });
 
-        $app->delete('/{id}', function(Request $request, Response $response, array $args){
+        $app->delete('/{id}', function (Request $request, Response $response, array $args) {
             $id = $request->getParam('id');
             $db = new DbConnection();
             $db->sectionRepository->delete($id);
 
             return $response->withStatus(200);
         });
-    }}
+    }
+}

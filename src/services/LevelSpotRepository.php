@@ -94,4 +94,15 @@ class LevelSpotRepository
 
         return $result;
     }
+
+    public function getForRiver($river)
+    {
+        $query = sprintf("select * from levelSpots where river = %s", $river);
+        $rows = $this->connection->query($query);
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            array_push($result, LevelSpot::fromJson($row));
+        }
+        return $result;
+    }
 }

@@ -7,6 +7,13 @@ class RouteRiver
 {
     public static function route($app)
     {
+        $app->get('/levelSpots/{id}', function(Request $request, Response $response, array $args){
+            $river = $args['id'];
+            $db = new DbConnection();
+            $result = $db->levelSpotRepository->getForRiver($river);
+            return $response->withJson($result);
+        });
+
 
         $app->get('/{id}', function (Request $request, Response $response, array $args) {
             $db = new DbConnection();
@@ -44,6 +51,7 @@ class RouteRiver
         $app->delete('/{id}', function (Request $request, Response $response, array $args) {
             $db = new DbConnection();
             $db->riverRepository->delete($args['id']);
+            return $response->withStatus(200);
         });
 
 

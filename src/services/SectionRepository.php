@@ -118,7 +118,7 @@ class SectionRepository
             "spot_grades = '{$section->spotGrade}', " .
             "type = '{$section->type}', " .
             "origin = '{$section->origin}', " .
-            "river = {$section->riverId}, " .
+          //  "river = {$section->riverId}, " .
             "levelSpot = {$section->levelSpotId}, " .
             "extLevelSpot = '{$section->extLevelSpot}', " .
             "extLevelType = '{$section->extLevelType}', " .
@@ -131,6 +131,7 @@ class SectionRepository
             " where id = {$sectionId}";
 
         $this->connection->query($query);
+        $this->connection->commit();
         return $section;
     }
 
