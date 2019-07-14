@@ -25,6 +25,7 @@ class Section
     public $midLevel;
     public $maxLevel;
     public $levelSpotId;
+    public $riverName;
 
     public $levelSpot;
 
@@ -57,12 +58,21 @@ class Section
         $section->midLevel = $row['midLevel'];
         $section->maxLevel = $row['maxLevel'];
         $section->levelSpotId = $row['levelSpot'];
+        $section->riverName = $row['riverName'];
 
         return $section;
     }
 
     static function getFromJson($json)
     {
+        if ($json['minLevel'] == '') $json['minLevel'] = 'null';
+        if ($json['midLevel'] == '') $json['midLevel'] = 'null';
+        if ($json['maxLevel'] == '') $json['maxLevel'] = 'null';
+        if ($json['minFlow'] == '') $json['minFlow'] = 'null';
+        if ($json['midFlow'] == '') $json['midFlow'] = 'null';
+        if ($json['maxFlow'] == '') $json['maxFlow'] = 'null';
+
+
         $section = new Section();
         $section->id = $json['id'];
         $section->grade = trim($json['grade']);
@@ -84,6 +94,7 @@ class Section
         $section->midLevel = trim($json['midLevel'] ?? 'null');
         $section->maxLevel = trim($json['maxLevel'] ?? 'null');
         $section->levelSpotId = trim($json['levelSpotId'] ?? 'null');
+        $section->riverName = $json['riverName'];
 
         return $section;
     }

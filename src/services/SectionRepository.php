@@ -15,7 +15,8 @@ class SectionRepository
             return "Database not connected";
         }
 
-        $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId " .
+        $query = "select *, s.name as section, s.river as riverId, s.origin as sectionOrigin, s.id as sectionId, " .
+            " r.name as riverName ".
             "from sections s " .
             "left outer join rivers r on r.id = s.river " .
             "left outer join levelSpots l on l.id = s.levelSpot " .
