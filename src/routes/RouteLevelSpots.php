@@ -71,5 +71,15 @@ class RouteLevelSpots
 
             return $response->withStatus($result ? 201 : 208);
         });
+
+        $app->get('/{id}/measurement', function (Request $request, Response $response, array $args) {
+            $id = $args['id'];
+            $from = $request->getParam('from');
+            $to = $request->getParam('to');
+
+            $db = new DbConnection();
+
+            $db->levelSpotRepository->getMeasurements($id, $from, $to);
+        });
     }
 }

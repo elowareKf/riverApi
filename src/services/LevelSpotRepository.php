@@ -105,4 +105,21 @@ class LevelSpotRepository
         }
         return $result;
     }
+
+    public function getMeasurements($id, $from, $to)
+    {
+        if ($to == null) $to = getdate();
+        if ($from == null) $from = getdate() . sub('P10D');
+
+        $query = 'select * from measurements where levelSpot = $id and timeStamp between $from and $to';
+
+        $rows = $this->connection->query($query);
+        $result = [];
+        while ($row = $rows->fetch_assoc()) {
+            result.push(LevelSpot::fromJson($row));
+        }
+
+        $rows->close();
+        return result;
+    }
 }
