@@ -17,7 +17,11 @@ class RouteRiver
 
         $app->get('/{id}', function (Request $request, Response $response, array $args) {
             $db = new DbConnection();
-            return $response->withJson($db->riverRepository->get($args['id']));
+            $river = $db->riverRepository->get($args['id']);
+            foreach ($river->sections as $section) {
+                $section->levelSpot = $db->levelSpotRepository->get($section->levelSpotId);
+            }
+            return $response->withJson($river);
         });
 
         $app->get('', function (Request $request, Response $response, array $args) {

@@ -47,6 +47,7 @@ class RouteLevelSpots
 
             if (!$levelSpot)
                 return $response->withStatus(404);
+
             return $response->withJson($levelSpot);
         });
 

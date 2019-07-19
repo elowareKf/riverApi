@@ -82,6 +82,7 @@ class LevelSpotRepository
 
     public function get($id)
     {
+        if ($id == null) return null;
         $query = "select * from levelSpots where id = $id";
 
         $rows = $this->connection->query($query);
