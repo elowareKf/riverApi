@@ -80,7 +80,9 @@ class RouteLevelSpots
 
             $db = new DbConnection();
 
-            $db->levelSpotRepository->getMeasurements($id, $from, $to);
+            $result = $db->levelSpotRepository->getMeasurements($id, $from, $to);
+
+            return $response->withJson($result);
         });
     }
 }

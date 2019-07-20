@@ -112,15 +112,18 @@ class LevelSpotRepository
         if ($to == null) $to = getdate();
         if ($from == null) $from = getdate() . sub('P10D');
 
-        $query = 'select * from measurements where levelSpot = $id and timeStamp between $from and $to';
+        $query = "select * from measurements where levelSpot = $id and timeStamp between '$from' and '$to'";
+
 
         $rows = $this->connection->query($query);
         $result = [];
         while ($row = $rows->fetch_assoc()) {
-            result.push(LevelSpot::fromJson($row));
+            $value = Measurement::fromJson($row);
+            $value->levelSpotId = $id;
+            array_push($result, $value);
         }
 
         $rows->close();
-        return result;
+        return $result;
     }
 }
