@@ -19,6 +19,7 @@ class DbConnection
 
     public function __construct()
     {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $this->settings = new Settings();
 
 

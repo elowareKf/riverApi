@@ -27,13 +27,16 @@ class RiverRepository
     public function get($id)
     {
         if ($this->connection == null) {
-            return "Database not connected";
+            throw new Exception("Database not connected");
         }
 
         $query = "select * from rivers where id = $id";
 
         $rows = $this->connection->query($query);
         $river = null;
+        if (!$rows) {
+            throw new Exception("Database Error [{$this->connection->errno}] {$this->connection->error}");
+        }
         while ($row = $rows->fetch_assoc()) {
             $river = River::getFromRow($row);
         }
@@ -63,7 +66,7 @@ class RiverRepository
         return $river;
     }
 
-    public function find($search) : array
+    public function find($search): array
     {
         if ($this->connection == null) {
             return "Database not connected";
@@ -104,7 +107,7 @@ class RiverRepository
 
     private function getLevelSpotsForRiver($id)
     {
-        $query = 'select * from levelSpots where river = '.$id;
+        $query = 'select * from levelSpots where river = ' . $id;
         $rows = $this->connection->query($query);
 
         $result = [];
