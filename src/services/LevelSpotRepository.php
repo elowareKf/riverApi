@@ -1,5 +1,6 @@
 <?php
 
+require 'DataLinearizer.php';
 
 class LevelSpotRepository
 {
@@ -112,7 +113,7 @@ class LevelSpotRepository
         if ($to == null) $to = getdate();
         if ($from == null) $from = getdate() . sub('P10D');
 
-        $query = "select * from measurements where levelSpot = $id and timeStamp between '$from' and '$to'";
+        $query = "select * from measurements where levelSpot = $id and timeStamp between '$from' and '$to' order by timeStamp";
 
 
         $rows = $this->connection->query($query);
@@ -124,6 +125,12 @@ class LevelSpotRepository
         }
 
         $rows->close();
+
+        $linearizer = new DataLinearizer($result);
+        $result = $linearizer->linearizeData();
+
         return $result;
     }
+
+
 }

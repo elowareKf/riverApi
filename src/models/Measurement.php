@@ -8,6 +8,7 @@ class Measurement
     public $level;
     public $flow;
     public $temperature;
+    public $origin;
 
     public static function fromJson($measurement)
     {
@@ -19,6 +20,8 @@ class Measurement
         if ($result->timeStamp == "")
             $result->timeStamp = trim($measurement['timeStamp']);
         # $result->timeStamp = DateTime::createFromFormat('Y-m-d H:i:s' ,$measurement['timestamp']);
+
+        $result->origin = "data";
         return $result;
     }
 }
