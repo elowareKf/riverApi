@@ -3,7 +3,8 @@
 
 class River
 {
-
+    public $id;
+    public $name;
     public $sections;
     public $levelSpots;
 

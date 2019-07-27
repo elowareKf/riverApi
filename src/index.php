@@ -10,6 +10,7 @@ require './services/DbConnection.php';
 require './routes/RouteRiver.php';
 require './routes/RouteSection.php';
 require './routes/RouteLevelSpots.php';
+require './routes/RouteLevelUpdate.php';
 
 $configuration = [
     'settings' => [
@@ -43,6 +44,10 @@ $app->group('/section', function () use ($app) {
 
 $app->group('/levelSpot', function () use ($app) {
     RouteLevelSpots::route($app);
+});
+
+$app->group('/levelUpdate', function() use ($app){
+    RouteLevelUpdate::route($app);
 });
 
 $app->get('/dummy', function (Request $request, Response $response, array $args) {

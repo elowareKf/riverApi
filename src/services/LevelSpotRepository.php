@@ -15,7 +15,7 @@ class LevelSpotRepository
     {
         $query = sprintf("select l.id from levelSpots l left outer join rivers r on l.river = r.id where r.name like '%s' and l.name like '%s'", trim($riverName), trim($levelSpotName));
         $rows = $this->connection->query($query);
-        $result = false;
+        $result = null;
 
         if ($row = $rows->fetch_row()) {
             $result = $row[0];
