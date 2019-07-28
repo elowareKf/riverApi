@@ -13,9 +13,24 @@ class Measurement
     public static function fromJson($measurement)
     {
         $result = new Measurement();
-        $result->level = trim($measurement['level']);
-        $result->flow = trim($measurement['flow']);
-        $result->temperature = trim($measurement['temperature']);
+
+        if (trim($measurement['level']) == "")
+            $result->level = null;
+        else
+            $result->level = trim($measurement['level']);
+
+
+        if (trim($measurement['flow']) == "")
+            $result->flow = null;
+        else
+            $result->flow = trim($measurement['flow']);
+
+        if (trim($measurement['temperature']) == "")
+            $result->temperature = null;
+        else
+            $result->temperature = trim($measurement['temperature']);
+
+
         $result->timeStamp = trim($measurement['timestamp']);
         if ($result->timeStamp == "")
             $result->timeStamp = trim($measurement['timeStamp']);

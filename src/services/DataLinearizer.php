@@ -44,12 +44,11 @@ class DataLinearizer
                 $inserter = $lastTimeStamp->add(new DateInterval("PT15M"));
                 if ($inserter >= $currentTime) break;
 
-                $measrement = new Measurement();
-                $measrement->levelSpotId = $value->levelSpotId;
-                $measrement->origin = "spare";
-                $measrement->timeStamp = $inserter->format('Y-m-d H:i:s');
-                error_log($measrement->timeStamp);
-                array_push($this->data, $measrement);
+                $measurement = new Measurement();
+                $measurement->levelSpotId = $value->levelSpotId;
+                $measurement->origin = "spare";
+                $measurement->timeStamp = $inserter->format('Y-m-d H:i:s');
+                array_push($this->data, $measurement);
             } while ($inserter < $currentTime);
 
             $lastTimeStamp = $currentTime;
