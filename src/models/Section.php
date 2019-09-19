@@ -93,7 +93,7 @@ class Section
         $section->minLevel = trim($json['minLevel'] ?? 'null');
         $section->midLevel = trim($json['midLevel'] ?? 'null');
         $section->maxLevel = trim($json['maxLevel'] ?? 'null');
-        $section->levelSpotId = trim($json['levelSpotId'] ?? 'null');
+        $section->levelSpotId = trim($json['levelSpot'] ?? 'null');
         $section->riverName = $json['riverName'];
 
         return $section;
